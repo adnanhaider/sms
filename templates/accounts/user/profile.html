@@ -1,0 +1,11 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block content %}
+{% if user !=  None %}
+<h2>{{user.groups.all.0}} Profile</h2>
+{% endif %}
+
+<br>
+
+{% endblock%}

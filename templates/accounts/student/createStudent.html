@@ -1,0 +1,100 @@
+{% extends 'layouts/principalLayout.html' %}
+{% block content %}
+<div class="container">
+    <h3>Create Student</h3>
+    <h6>Before creating student profile, add guardian if not in the list.</h6>
+    <form method="POST">
+        <table class="tabal table-sm">
+            <tr>
+                <td><label for="guardian">Select or Add Guardian:</label></td>
+                <td>
+                    <select class="selectpicker" title="Choose guardian" name='guardian' 
+                    data-live-search-placeholder="Search by name or email" data-live-search="true">
+                        {% for parent in parents %}
+                            <option value={{parent.id}} data-tokens="{{parent.user.email}}">{{parent}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary"  data-toggle="collapse" data-target="#add_parent">
+                        <a href={% url 'accounts:create_parent' %} style="color: white;" target="_blank">Add Guardian</a></button>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="class_room">Select Class Room:</label></td>
+                <td>
+                    <select class="selectpicker" title="Choose Class Room" name='class_room' 
+                    data-live-search-placeholder="Search class room" data-live-search="true">
+                    {% for class_room, pair in class_rooms_with_student_count_dictionary.items %}
+                        {% for student_count, student_capacity in pair.items %}
+                            {% if student_count < student_capacity %}    
+                                <option value={{class_room.room_number}} data-tokens="{{class_room}}">
+                                    {{class_room}} {{student_count}}|{{student_capacity}}
+                                </option>
+                             {% else %}
+                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room}}">
+                                    {{class_room}} {{student_count}}|{{student_capacity}}
+                                </option>
+                            {%endif%}  
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="email">Email:</label></td>
+                <td colspan="2">{{ std_form.email}}</td>
+            </tr>
+            <tr>
+                <td><label for="password1">Password:</label></td>
+                <td colspan="2">{{ std_form.password1}}</td>
+            </tr>
+            <tr>
+                <td><label for="password2">Confirm Password:</label></td>
+                <td colspan="2">{{ std_form.password2}}</td>
+            </tr>
+            <tr>
+                <td><label for="first_name">First Name:</label></td>
+                <td colspan="2">{{ std_form.first_name}}</td>
+            </tr>
+            <tr>
+                <td><label for="last_name">Last Name:</label></td>
+                <td colspan="2">{{ std_form.last_name}}</td>
+            </tr>
+            <tr>
+                <td><label for="photo">Photo:</label></td>
+                <td colspan="2">{{ std_profile_form.photo}}</td>
+            </tr>
+            <tr>
+                <td><label for="birth_date">Date of Birth:</label></td>
+                <td colspan="2">{{ std_profile_form.birth_date}}</td>
+            </tr>
+            <tr>
+                <td><label for="roll_number">Roll Number:</label></td>
+                <td colspan="2">{{ std_profile_form.roll_number}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{std_form.errors}}
+                    {{class_rooms.errors}}
+                    {{std_profile_form.errors}}
+                </td>
+            </tr>
+        </table>
+        <!-- <div class="card" style="display: none;">
+            {{std_form.errors}}
+                    {{class_rooms.errors}}
+                    {{std_profile_form.errors}}
+        </div> -->
+        
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary" value="Create Student">
+    </form>
+</div>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/js/bootstrap-select.js"></script>
+    
+{% endblock %}
