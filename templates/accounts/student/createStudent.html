@@ -28,12 +28,18 @@
                     {% for class_room, pair in class_rooms_with_student_count_dictionary.items %}
                         {% for student_count, student_capacity in pair.items %}
                             {% if student_count < student_capacity %}    
-                                <option value={{class_room.room_number}} data-tokens="{{class_room}}">
-                                    {{class_room}} {{student_count}}|{{student_capacity}}
+                                <option value={{class_room.room_number}} data-tokens="{{class_room}}"
+                                data-content="{{class_room}}
+                                <span class='badge progress-bar-success'>
+                                    {{student_count}}|{{student_capacity}}
+                                </span>">
                                 </option>
                              {% else %}
-                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room}}">
-                                    {{class_room}} {{student_count}}|{{student_capacity}}
+                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room}}"
+                                data-content="{{class_room}}
+                                <span class='badge progress-bar-danger'>
+                                    {{student_count}}|{{student_capacity}}
+                                </span>">>
                                 </option>
                             {%endif%}  
                             {% endfor %}
