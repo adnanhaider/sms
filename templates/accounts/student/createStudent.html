@@ -29,14 +29,16 @@
                         {% for student_count, student_capacity in pair.items %}
                             {% if student_count < student_capacity %}    
                                 <option value={{class_room.room_number}} data-tokens="{{class_room}}"
-                                data-content="{{class_room}}
+                                data-content="<i class='fas fa-door-open' style='color:green'></i>
+                                {{class_room}}
                                 <span class='badge progress-bar-success'>
                                     {{student_count}}|{{student_capacity}}
                                 </span>">
                                 </option>
                              {% else %}
-                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room}}"
-                                data-content="{{class_room}}
+                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room.room_number}}"
+                                data-content="<i class='fas fa-door-closed' style='color:red'></i>
+                                {{class_room}}
                                 <span class='badge progress-bar-danger'>
                                     {{student_count}}|{{student_capacity}}
                                 </span>">>
