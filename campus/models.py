@@ -70,7 +70,7 @@ class TeacherCalledForPTM(models.Model):
         verbose_name_plural = _('Teachers Called For Meetings')
 
 class Level(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, unique=True)
     def __str__(self):
         return '%s'%(self.name)
 

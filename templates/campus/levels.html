@@ -1,0 +1,27 @@
+{% extends 'layouts/principalLayout.html' %}
+{% block content %}
+<div class="container">
+    <h3>Level we teach</h3>
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Level Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for level in levels %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{level.name}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'campus:add_level' %}">Add New Level</a>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

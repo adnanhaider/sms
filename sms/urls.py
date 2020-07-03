@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_redirect, name = 'login_redirect'),
     path('account/', include('accounts.urls', namespace='accounts')),
+    path('campus/', include('campus.urls', namespace='campus')),
 
     path('password_change/', PasswordChangeView.as_view(template_name='passwords/change_password.html',
     success_url = reverse_lazy('password_change_done')), name='password_change'),

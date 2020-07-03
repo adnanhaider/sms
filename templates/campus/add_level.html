@@ -1,0 +1,23 @@
+{% extends 'layouts/principalLayout.html' %}
+{% block content %}
+<div class="container">
+    <h3>Add Level</h3>
+    <form method="POST">
+        <table class="tabal table-sm">
+            <tr>
+                <td><label for="name">Level Name:</label></td>
+                <td>{{form.name}}</td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <p>{{msg}}</p>
+        <input type="submit" class="btn btn-secondary" value="Add Level">
+        
+        <a href="{% url 'campus:levels' %}">View Levels</a>
+    </form>
+</div>
+    {% include 'includes/select-styling.html' %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
