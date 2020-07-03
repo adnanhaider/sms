@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=True) 
-       
+    
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -65,6 +65,8 @@ class Profile(models.Model):
     salary = models.FloatField(max_length=6)
     contact_number = models.CharField(max_length=11)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, default=1)
+    CHOICES = [('M', 'Male'), ('F', 'Female')]
+    gender = models.CharField(_('gender'), max_length=1, choices=CHOICES)
     def __str__(self):
         return self.user.__str__()
         
@@ -208,7 +210,8 @@ class Student(Profile):
     salary = None
     contact_number = None
     address = None
-    roll_number = models.PositiveIntegerField(primary_key=True, unique=True)
+    reg_number = models.CharField(primary_key=True, max_length=30, unique=True)
+    roll_number = models.PositiveIntegerField()
     STATUS_CHOICES = [('A', 'Active'), ('I', 'Inactive')]
     status = models.CharField(max_length=1, default='A', choices=STATUS_CHOICES)
     guardian = models.ForeignKey("Parent", on_delete=models.CASCADE)
@@ -231,4 +234,3 @@ class Student(Profile):
 
     def checkAttendance(self):
         return True
-

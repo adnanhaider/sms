@@ -68,17 +68,21 @@ class AddressForm(forms.ModelForm):
 
 class DateInput(forms.DateInput):
     input_type = 'date'
-
     
 class ProfileForm(forms.ModelForm):
     photo = forms.ImageField(required=False)
     birth_date = forms.DateField(widget=DateInput())
     salary = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control','min':0}), required=False)
-
+    CHOICES = [('M', 'Male'), ('F', 'Female')]
+    gender = forms.ChoiceField(
+        widget=forms.Select(attrs={'class':'selectpicker form-control', 'title': 'Select Gender'}), 
+        choices=CHOICES)
+    
     contact_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}), required=False)
     class Meta:
         model = Profile
         fields = [
+            'gender',
             'photo',
             'birth_date',
             'salary',
@@ -102,15 +106,9 @@ class TeacherProfileForm(ProfileForm):
         exclude = ( 'user', 'address',)
 
 class StudentProfileForm(ProfileForm):
-    # CHOICES = [('A', 'Active'), ('I', 'Inactive')]
-    # status = forms.ChoiceField(widget=forms.Select(attrs={'class':'selectpicker form-control'}), choices=CHOICES)
-    roll_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control','min':0}))
-    # CLASS_ROOMS = ClassRoom.objects.all()
-    # class_room = forms.ChoiceField(widget=forms.Select(attrs={'class':'selectpicker'}), choices=CLASS_ROOMS)
-
     class Meta:
         model = Student
-        exclude = ['user', 'guardian','salary', 'contact_number', 'status']
+        exclude = ['user', 'guardian','salary', 'date_left', 'contact_number', 'status', 'reg_number', 'roll_number']
 
 class ParentProfileForm(ProfileForm):
     class Meta:

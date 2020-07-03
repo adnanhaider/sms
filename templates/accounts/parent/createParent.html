@@ -26,6 +26,10 @@
                 <td>{{ form.last_name}}</td>
             </tr>
             <tr>
+                <td><label for="gender">Gender:</label></td>
+                <td>{{ profile_form.gender}}</td>
+            </tr>
+            <tr>
                 <td><label for="photo">Photo:</label></td>
                 <td>{{ profile_form.photo}}</td>
             </tr>
@@ -63,4 +67,5 @@
         <input type="submit" value="Create">
     </form>
 </div>
+{% include 'includes/select-styling.html' %}
 {% endblock %}

@@ -22,8 +22,8 @@
             </tr>
             <tr>
                 <td><label for="class_room">Select Class Room:</label></td>
-                <td>
-                    <select class="selectpicker" title="Choose Class Room" name='class_room' 
+                <td colspan="2">
+                    <select class="selectpicker form-control" title="Choose Class Room" name='class_room' 
                     data-live-search-placeholder="Search class room" data-live-search="true">
                     {% for class_room, pair in class_rooms_with_student_count_dictionary.items %}
                         {% for student_count, student_capacity in pair.items %}
@@ -49,23 +49,27 @@
             </tr>
             <tr>
                 <td><label for="email">Email:</label></td>
-                <td colspan="2">{{ std_form.email}}</td>
+                <td colspan="2">{{ std_user_form.email}}</td>
             </tr>
             <tr>
                 <td><label for="password1">Password:</label></td>
-                <td colspan="2">{{ std_form.password1}}</td>
+                <td colspan="2">{{ std_user_form.password1}}</td>
             </tr>
             <tr>
                 <td><label for="password2">Confirm Password:</label></td>
-                <td colspan="2">{{ std_form.password2}}</td>
+                <td colspan="2">{{ std_user_form.password2}}</td>
             </tr>
             <tr>
                 <td><label for="first_name">First Name:</label></td>
-                <td colspan="2">{{ std_form.first_name}}</td>
+                <td colspan="2">{{ std_user_form.first_name}}</td>
             </tr>
             <tr>
                 <td><label for="last_name">Last Name:</label></td>
-                <td colspan="2">{{ std_form.last_name}}</td>
+                <td colspan="2">{{ std_user_form.last_name}}</td>
+            </tr>
+            <tr>
+                <td><label for="gender">Gender:</label></td>
+                <td colspan="2">{{ std_profile_form.gender}}</td>
             </tr>
             <tr>
                 <td><label for="photo">Photo:</label></td>
@@ -76,31 +80,19 @@
                 <td colspan="2">{{ std_profile_form.birth_date}}</td>
             </tr>
             <tr>
-                <td><label for="roll_number">Roll Number:</label></td>
-                <td colspan="2">{{ std_profile_form.roll_number}}</td>
-            </tr>
-            <tr>
                 <td></td>
                 <td>{{std_form.errors}}
                     {{class_rooms.errors}}
                     {{std_profile_form.errors}}
                 </td>
             </tr>
-        </table>
-        <!-- <div class="card" style="display: none;">
-            {{std_form.errors}}
-                    {{class_rooms.errors}}
-                    {{std_profile_form.errors}}
-        </div> -->
-        
+        </table>        
         {% csrf_token %}
         <input type="submit" class="btn btn-secondary" value="Create Student">
     </form>
 </div>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/css/bootstrap-select.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/js/bootstrap-select.js"></script>
-    
-{% endblock %}
+    {% include 'includes/select-styling.html' %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

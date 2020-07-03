@@ -47,6 +47,7 @@ class CreatePrincipalUser(View):
                 address_instance = address_form.save()
                 Principal.objects.create(
                     user=user_instance,
+                    gender = profile_form.cleaned_data.get('gender'),
                     photo = profile_form.cleaned_data.get('photo'),
                     birth_date = profile_form.cleaned_data.get('birth_date'),
                     date_left = profile_form.cleaned_data.get('date_left'),
@@ -74,6 +75,7 @@ class CreateHrUser(View):
                 address_instance = address_form.save()
                 HrStaff.objects.create(
                     user=user_instance,
+                    gender = profile_form.cleaned_data.get('gender'),
                     photo = profile_form.cleaned_data.get('photo'),
                     birth_date = profile_form.cleaned_data.get('birth_date'),
                     date_left = profile_form.cleaned_data.get('date_left'),
@@ -101,6 +103,7 @@ class CreateTeacherUser(View):
                 address_instance = address_form.save()
                 Teacher.objects.create(
                     user=user_instance,
+                    gender = profile_form.cleaned_data.get('gender'),
                     photo = profile_form.cleaned_data.get('photo'),
                     birth_date = profile_form.cleaned_data.get('birth_date'),
                     date_left = profile_form.cleaned_data.get('date_left'),
@@ -128,6 +131,7 @@ class CreateParentUser(View):
                 address_instance = address_form.save()
                 Parent.objects.create(
                     user=user_instance,
+                    gender = profile_form.cleaned_data.get('gender'),
                     photo = profile_form.cleaned_data.get('photo'),
                     birth_date = profile_form.cleaned_data.get('birth_date'),
                     contact_number = profile_form.cleaned_data.get('contact_number'),
@@ -136,32 +140,28 @@ class CreateParentUser(View):
                 return redirect('accounts:parentIndex',)
 
 class CreateStudentUser(View):
-    def getStudentCount(self, class_room):
+    def getStudentCountInClass(self, class_room):
         class_rooms_students = ClassRoomStudents.objects.all()
         count = 0
         for class_room_students in class_rooms_students:
             if class_room_students.class_room == class_room:
                 count = count + 1
         return count
+    def getTotalStudentCount(self):
+        return ClassRoomStudents.objects.all().count()
     def get(self, request):
         std_user_form = RegisterForm(request.POST or None)
         std_profile_form = StudentProfileForm(request.POST or None)
         parents = Parent.objects.all()
         class_rooms = ClassRoom.objects.all()
-        class_room_students = ClassRoomStudents.objects.all()
-        list_of_class_rooms = []
-        list_of_number_of_students_in_each_class_room = []
         class_rooms_with_student_count_dictionary = {}
         for class_room in class_rooms:
-            class_rooms_with_student_count_dictionary.update({class_room: {self.getStudentCount(class_room): class_room.student_capacity}})
-        print('--------------------------------------------')
-        print(class_rooms_with_student_count_dictionary)
+            class_rooms_with_student_count_dictionary.update(
+                {class_room: {self.getStudentCountInClass(class_room): class_room.student_capacity}})
         context = {
-            'std_form': std_user_form,
+            'std_user_form': std_user_form,
             'std_profile_form': std_profile_form,
             'parents': parents,
-            'class_rooms': class_rooms,
-            'class_room_students_count': class_room_students,
             'class_rooms_with_student_count_dictionary': class_rooms_with_student_count_dictionary
         }
         return render(request, 'accounts/student/createStudent.html', context)
@@ -177,20 +177,25 @@ class CreateStudentUser(View):
                 std_user_instance.groups.add(Group.objects.get(name='Student'))
                 parent_obj = request.POST.get('guardian')
                 class_room_obj = request.POST.get('class_room')
-                print('-------------------------------------------------------------')
                 std_instance = Student.objects.create(
                     user=std_user_instance,
+                    gender = std_profile_form.cleaned_data.get('gender'),
                     photo = std_profile_form.cleaned_data.get('photo'),
                     birth_date = std_profile_form.cleaned_data.get('birth_date'),
-                    date_left = std_profile_form.cleaned_data.get('date_left'),
-                    roll_number = std_profile_form.cleaned_data.get('roll_number'),
+                    reg_number = str(datetime.datetime.now().year-2000)+
+                            str(datetime.datetime.now().month)+
+                            str(101+self.getTotalStudentCount()),
+                    roll_number = 1,
                     status = 'A', # student will be active on creation and Inactive only when passed out of left school
                     guardian = get_object_or_404(Parent, id=parent_obj)
                 )
-                ClassRoomStudents.objects.create(
+                student_class_room = ClassRoomStudents.objects.create(
                     class_room = get_object_or_404(ClassRoom, pk=class_room_obj),
-                    student = get_object_or_404(Student, pk=std_instance.roll_number),
+                    student = get_object_or_404(Student, pk=std_instance.reg_number),
                     session = datetime.datetime.now().year
+                )
+                Student.objects.filter(user=std_user_instance).update(
+                    roll_number = self.getStudentCountInClass(student_class_room.class_room)
                 )
                 return redirect('accounts:studentIndex')
 
@@ -218,48 +223,3 @@ class StudentIndexView(View):
     def get(self, request):
         context={}
         return render(request, 'accounts/student/index.html', context)
-
-
-
-
-
-
-    # def createPrincipalUser(request):
-    # user_form = RegisterForm(request.POST or None)
-    # profile_form = PrincipalProfileForm(request.POST or None)
-    # address_form = AddressForm(request.POST or None)
-    # if request.method == 'POST':
-    #     if user_form.is_valid() and address_form.is_valid() and profile_form.is_valid():
-    #         user_instance = user_form.save()
-    #         user_instance.groups.add(Group.objects.get(name='Principal'))
-    #         profile_form.user = user_instance
-    #         address_instance = address_form.save()
-    #         profile_form.address = address_instance
-    #         profile_form.save()
-    #         return redirect('accounts:principalIndex',)
-    # context = {'form':user_form, 'address_form': address_form, 'profile_form':profile_form}
-    # return render(request, 'accounts/principal/createPrincipal.html', context)
-
-
-
-    # def createPrincipalUser(request):
-    # user_form = RegisterForm(request.POST or None)
-    # profile_form = PrincipalProfileForm(request.POST or None)
-    # address_form = AddressForm(request.POST or None)
-    # if request.method == 'POST':
-    #     if user_form.is_valid() and address_form.is_valid() and profile_form.is_valid():
-    #         user_instance = user_form.save()
-    #         user_instance.groups.add(Group.objects.get(name='Principal'))
-    #         address_instance = address_form.save()
-    #         Principal.objects.create(
-    #             user=user_instance,
-    #             photo = profile_form.cleaned_data.get('photo'),
-    #             birth_date = profile_form.cleaned_data.get('birth_date'),
-    #             date_left = profile_form.cleaned_data.get('date_left'),
-    #             salary = profile_form.cleaned_data.get('salary'),
-    #             contact_number = profile_form.cleaned_data.get('contact_number'),
-    #             address = address_instance,
-    #         )
-    #         return redirect('accounts:principalIndex',)
-    # context = {'form':user_form, 'address_form': address_form, 'profile_form':profile_form}
-    # return render(request, 'accounts/principal/createPrincipal.html', context)
