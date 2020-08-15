@@ -171,33 +171,45 @@ class CreateStudentUser(View):
         std_profile_form = StudentProfileForm(request.POST or None)
         parents = Parent.objects.all()
         class_rooms = ClassRoom.objects.all()
-        if request.method == 'POST':
-            if std_user_form.is_valid() and std_profile_form.is_valid():
-                std_user_instance = std_user_form.save()
-                std_user_instance.groups.add(Group.objects.get(name='Student'))
-                parent_obj = request.POST.get('guardian')
-                class_room_obj = request.POST.get('class_room')
-                std_instance = Student.objects.create(
-                    user=std_user_instance,
-                    gender = std_profile_form.cleaned_data.get('gender'),
-                    photo = std_profile_form.cleaned_data.get('photo'),
-                    birth_date = std_profile_form.cleaned_data.get('birth_date'),
-                    reg_number = str(datetime.datetime.now().year-2000)+
-                            str(datetime.datetime.now().month)+
-                            str(101+self.getTotalStudentCount()),
-                    roll_number = 1,
-                    status = 'A', # student will be active on creation and Inactive only when passed out of left school
-                    guardian = get_object_or_404(Parent, id=parent_obj)
-                )
-                student_class_room = ClassRoomStudents.objects.create(
-                    class_room = get_object_or_404(ClassRoom, pk=class_room_obj),
-                    student = get_object_or_404(Student, pk=std_instance.reg_number),
-                    session = datetime.datetime.now().year
-                )
-                Student.objects.filter(user=std_user_instance).update(
-                    roll_number = self.getStudentCountInClass(student_class_room.class_room)
-                )
-                return redirect('accounts:studentIndex')
+        class_rooms_with_student_count_dictionary = {}
+        for class_room in class_rooms:
+            class_rooms_with_student_count_dictionary.update(
+                {class_room: {self.getStudentCountInClass(class_room): class_room.student_capacity}})
+        context = {
+            'std_user_form': std_user_form,
+            'std_profile_form': std_profile_form,
+            'parents': parents,
+            'class_rooms_with_student_count_dictionary': class_rooms_with_student_count_dictionary
+        }
+        print(std_profile_form.is_valid())
+        if std_user_form.is_valid() and std_profile_form.is_valid():
+            std_user_instance = std_user_form.save()
+            std_user_instance.groups.add(Group.objects.get(name='Student'))
+            parent_obj = request.POST.get('guardian')
+            class_room_obj = request.POST.get('class_room')
+            std_instance = Student.objects.create(
+                user=std_user_instance,
+                gender = std_profile_form.cleaned_data.get('gender'),
+                photo = std_profile_form.cleaned_data.get('photo'),
+                birth_date = std_profile_form.cleaned_data.get('birth_date'),
+                reg_number = str(datetime.datetime.now().year-2000)+
+                    str(datetime.date.today().strftime('%m'))+
+                    str(101+self.getTotalStudentCount()),
+                roll_number = 1, # temporarily giving 1 roll_number and updating again to the number of students in the class
+                status = 'A', # student will be active on creation and Inactive only when passed out of left school
+                guardian = get_object_or_404(Parent, id=parent_obj)
+            )
+            student_class_room = ClassRoomStudents.objects.create(
+                class_room = get_object_or_404(ClassRoom, pk=class_room_obj),
+                student = get_object_or_404(Student, pk=std_instance.reg_number),
+                session = datetime.datetime.now().year
+            )
+            Student.objects.filter(user=std_user_instance).update(
+                roll_number = self.getStudentCountInClass(student_class_room.class_room)
+            )
+            return redirect('accounts:studentIndex')
+        else:
+            return render(request, 'accounts/student/createStudent.html', context)
 
 class PrincipalIndexView(View):
     def get(self, request):

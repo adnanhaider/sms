@@ -1,30 +1,27 @@
 {% extends 'layouts/principalLayout.html' %}
 {% block content %}
+{% include 'includes/foreignkeypopupscripts.html'%}
 <div class="container">
     <h3>Create Student</h3>
-    <h6>Before creating student profile, add guardian if not in the list.</h6>
-    <form method="POST">
+    <form enctype="multipart/form-data" action="" method="post" id="student_form" novalidate="">
+        
         <table class="tabal table-sm">
             <tr>
-                <td><label for="guardian">Select or Add Guardian:</label></td>
-                <td>
-                    <select class="selectpicker" title="Choose guardian" name='guardian' 
-                    data-live-search-placeholder="Search by name or email" data-live-search="true">
-                        {% for parent in parents %}
-                            <option value={{parent.id}} data-tokens="{{parent.user.email}}">{{parent}}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-secondary"  data-toggle="collapse" data-target="#add_parent">
-                        <a href={% url 'accounts:create_parent' %} style="color: white;" target="_blank">Add Guardian</a></button>
-                </td>
+                <td><label for="guardian">Guardian:</label></td>
+                <td >{{ std_profile_form.guardian }}</td>
             </tr>
+            {%if std_profile_form.guardian.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_profile_form.guardian.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="class_room">Select Class Room:</label></td>
-                <td colspan="2">
-                    <select class="selectpicker form-control" title="Choose Class Room" name='class_room' 
-                    data-live-search-placeholder="Search class room" data-live-search="true">
+                <td>
+                    <select class="selectpicker form-control" title="Choose Class Room" id="select_class_room"
+                      name='class_room' data-live-search-placeholder="Search class room" data-live-search="true">
+                    <option value="" selected="selected" hidden="hidden">Choose here</option>
                     {% for class_room, pair in class_rooms_with_student_count_dictionary.items %}
                         {% for student_count, student_capacity in pair.items %}
                             {% if student_count < student_capacity %}    
@@ -49,51 +46,103 @@
                     </select>
                 </td>
             </tr>
+            {%if std_profile_form.class_room.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_profile_form.class_room_list.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
             <tr>
-                <td><label for="email">Email:</label></td>
-                <td colspan="2">{{ std_user_form.email}}</td>
+                <td><label for="email">Student Email:</label></td>
+                <td>{{ std_user_form.email}}</td>
             </tr>
+            {%if std_user_form.email.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_user_form.email.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
+            
             <tr>
                 <td><label for="password1">Password:</label></td>
-                <td colspan="2">{{ std_user_form.password1}}</td>
+                <td>{{ std_user_form.password1}}</td>
             </tr>
+            {%if std_user_form.password1.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_user_form.password1.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
             <tr>
                 <td><label for="password2">Confirm Password:</label></td>
-                <td colspan="2">{{ std_user_form.password2}}</td>
+                <td>{{ std_user_form.password2}}</td>
             </tr>
+            {%if std_user_form.password2.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_user_form.password2.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
+            
             <tr>
                 <td><label for="first_name">First Name:</label></td>
-                <td colspan="2">{{ std_user_form.first_name}}</td>
+                <td>{{ std_user_form.first_name}}</td>
             </tr>
+            {%if std_user_form.first_name.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_user_form.first_name.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
+            
             <tr>
                 <td><label for="last_name">Last Name:</label></td>
-                <td colspan="2">{{ std_user_form.last_name}}</td>
+                <td>{{ std_user_form.last_name}}</td>
             </tr>
+            {%if std_user_form.last_name.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_user_form.last_name.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
             <tr>
                 <td><label for="gender">Gender:</label></td>
-                <td colspan="2">{{ std_profile_form.gender}}</td>
+                <td>{{ std_profile_form.gender}}</td>
             </tr>
+            {%if std_profile_form.gender.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_profile_form.gender.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
             <tr>
                 <td><label for="photo">Photo:</label></td>
-                <td colspan="2">{{ std_profile_form.photo}}</td>
+                <td>{{ std_profile_form.photo}}</td>
             </tr>
+            {%if std_profile_form.photo.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_profile_form.photo.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}            
             <tr>
                 <td><label for="birth_date">Date of Birth:</label></td>
-                <td colspan="2">{{ std_profile_form.birth_date}}</td>
+                <td>{{ std_profile_form.birth_date}}</td>
             </tr>
-            <tr>
-                <td></td>
-                <td>{{std_form.errors}}
-                    {{class_rooms.errors}}
-                    {{std_profile_form.errors}}
-                </td>
-            </tr>
+            {%if std_profile_form.birth_date.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ std_profile_form.birth_date.errors|striptags }}</p></td>
+                </tr>
+            {% endif%}
         </table>        
         {% csrf_token %}
         <input type="submit" class="btn btn-secondary" value="Create Student">
     </form>
 </div>
     {% include 'includes/select-styling.html' %}
+    <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+
 {% endblock content %}
 
 {% block script %}

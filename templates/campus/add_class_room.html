@@ -1,0 +1,59 @@
+{% extends 'layouts/principalLayout.html' %}
+{% block content %}
+{% include 'includes/foreignkeypopupscripts.html'%}
+
+<div class="container">
+    <h3>Add Class Room</h3>
+    <form method="POST">
+        <table class="table-sm">
+            <tr>
+                <td><label for="room_number">Room Number:</label></td>
+                <td>{{ form.room_number }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ form.room_number.errors|striptags }}</p></td>
+            </tr>
+            <tr>
+                <td><label for="level">Level:</label></td>
+                <td>{{ form.level }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ form.level.errors|striptags }}</p></td>
+            </tr>
+            <tr>
+                <td><label for="section">Section:</label></td>
+                <td >{{ form.section }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ form.section.errors|striptags }}</p></td>
+            </tr>
+            <tr>
+                <td><label for="student_capacity">Student Capacity:</label></td>
+                <td>{{ form.student_capacity }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ form.student_capacity.errors|striptags }}</p></td>
+            </tr>
+            <tr>
+                <td><label for="incharge">Incharge:</label></td>
+                <td>{{ form.incharge }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ form.incharge.errors|striptags }}</p></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary" value="Add Class Room ">
+        
+        <a href="{% url 'campus:class_rooms' %}">View Class Rooms</a>
+    </form>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

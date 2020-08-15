@@ -58,7 +58,7 @@ class Address(models.Model):
         db_table = 'Address'
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,unique=True ,default=1)
     photo = models.ImageField(upload_to='static/images/', null=True, blank=True)
     birth_date = models.DateField()
     date_left = models.DateField(null=True, blank=True)

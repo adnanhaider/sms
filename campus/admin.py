@@ -6,6 +6,13 @@ from campus.models import (
     TimeTable, SyllabusPlanning, DailyDiary,Assignment,AssignmentResult, Exam, ExamResult, ParentComplaint, StudentComplaint, Fine, Fee, 
     Event, EventInvites
 )
+from campus.forms import *
+from .sites import campus_admin_site
+class ClassRoomModelAdmin(admin.ModelAdmin):
+    form = AddClassRoomForm
+campus_admin_site.register(Level, admin.ModelAdmin)
+campus_admin_site.register(ClassRoom, ClassRoomModelAdmin)
+
 
 class HrStaffAttendanceAdmin(admin.ModelAdmin):
     list_display = ('hrStaff', 'date', 'status')

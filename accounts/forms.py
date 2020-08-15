@@ -6,6 +6,10 @@ User = get_user_model()
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+
+from .sites import accounts_admin_site
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
@@ -25,7 +29,7 @@ class RegisterForm(UserCreationForm):
         email = self.cleaned_data.get('email')
         qs = User.objects.filter(email=email)
         if qs.exists():
-            raise forms.ValidationError("email is taken")
+            raise forms.ValidationError(str(email) + " is taken")
         return email
 
     def clean_password2(self):
@@ -77,7 +81,6 @@ class ProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(
         widget=forms.Select(attrs={'class':'selectpicker form-control', 'title': 'Select Gender'}), 
         choices=CHOICES)
-    
     contact_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}), required=False)
     class Meta:
         model = Profile
@@ -89,6 +92,15 @@ class ProfileForm(forms.ModelForm):
             'contact_number',
         ]
         widgets = {'birth_date': DateInput()}
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = User.objects.filter(email=email)
+        if qs.exists():
+            raise forms.ValidationError(str(email) + ' is taken')
+        return email
+    # deact_number = self.cleaned_data.get('contact_number')
+
+    
 
 class PrincipalProfileForm(ProfileForm):
     class Meta:
@@ -106,9 +118,31 @@ class TeacherProfileForm(ProfileForm):
         exclude = ( 'user', 'address',)
 
 class StudentProfileForm(ProfileForm):
+    guardian = Student._meta.get_field('guardian').formfield(
+        widget=RelatedFieldWidgetWrapper(
+            Student._meta.get_field('guardian').formfield().widget,
+            Student._meta.get_field('guardian').remote_field,
+            accounts_admin_site,
+            can_add_related=True,
+        )
+    )
+
+    CHOICES = ClassRoom.objects.values_list('room_number',flat=True)
+    CHOICES = list(CHOICES)
+    class_room = forms.ChoiceField(widget=forms.Select(choices=CHOICES))
+
+    def __init__(self, *args, **kwargs):
+        super(StudentProfileForm, self).__init__(*args, **kwargs)
+        self.fields['guardian'].widget.attrs.update({'class': 'custom-select-lg', 
+                # 'data-live-search': 'true',
+                # 'data-live-search-placeholder':'Search by name or email',
+            })
     class Meta:
         model = Student
-        exclude = ['user', 'guardian','salary', 'date_left', 'contact_number', 'status', 'reg_number', 'roll_number']
+        exclude = ['user', 'guardian', 'salary', 'date_left', 'contact_number', 'status', 'reg_number', 'roll_number']
+    
+    
+
 
 class ParentProfileForm(ProfileForm):
     class Meta:

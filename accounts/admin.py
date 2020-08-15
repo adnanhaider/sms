@@ -2,12 +2,18 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-from .forms import UserAdminCreationForm, UserAdminChangeForm
+from .forms import UserAdminCreationForm, UserAdminChangeForm, ParentProfileForm, StudentProfileForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from accounts.models import (
     Address, Principal, HrStaff, Teacher, Parent, Student
     )
+from .sites import accounts_admin_site
+class StudentModelAdmin(admin.ModelAdmin):
+    form = StudentProfileForm
+accounts_admin_site.register(Parent, admin.ModelAdmin)
+accounts_admin_site.register(Student,StudentModelAdmin)
+
 
 class UserAdmin(BaseUserAdmin):
     # The forms to add and change user instances
@@ -35,7 +41,6 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email', 'first_name', 'last_name',)
     ordering = ('email',)
     filter_horizontal = ()
-
 admin.site.register(User, UserAdmin)
 
 class AddressAdmin(admin.ModelAdmin):

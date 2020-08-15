@@ -1,0 +1,35 @@
+{% extends 'layouts/principalLayout.html' %}
+{% block content %}
+<div class="container">
+    <h3>List of Class Rooms</h3>
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Room Number</th>
+                <th>Section</th>
+                <th>Student Capacity</th>
+                <th>Level</th>
+                <th>Incharge</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in class_rooms %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{room.room_number}}</td>
+                    <td>{{room.section}}</td>
+                    <td>{{room.student_capacity}}</td>
+                    <td>{{room.level}}</td>
+                    <td>{{room.incharge}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'campus:add_class_room' %}">Add New class room</a>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

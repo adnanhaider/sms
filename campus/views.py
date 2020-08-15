@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import *
+from accounts.forms import *
+from django.utils.html import escape
 
 def home(request):
     return render(request, 'campus/home.html')
@@ -16,9 +18,6 @@ class AddLevel(View):
         form = AddLevelForm(request.POST or None)
         if form.is_valid():
             form.save()
-            # Level.objects.create(
-            #     name = form.cleaned_data.get('name')
-            # )
             return redirect('campus:levels')
         else:
             msg = 'Level already exists'
@@ -31,6 +30,13 @@ class Levels(View):
         context = { 'levels': levels }
         return render(request, self.template_name, context)
 
+class ClassRooms(View):
+    template_name = 'campus/class_rooms.html'
+    def get(self, request):
+        class_rooms = ClassRoom.objects.all()
+        context = { 'class_rooms': class_rooms }
+        return render(request, self.template_name, context)
+
 class AddClassRoom(View):
     template_name = 'campus/add_class_room.html'
     def get(self, request):
@@ -39,6 +45,9 @@ class AddClassRoom(View):
         return render(request, self.template_name, context)
     
     def post(self, request):
-        form = AddLevelForm(request.POST or None)
+        form = AddClassRoomForm(request.POST or None)
         if form.is_valid():
             form.save()
+            return redirect('campus:class_rooms')
+        else:
+            return render(request, self.template_name, {'form':form})
