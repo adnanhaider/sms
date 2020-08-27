@@ -1,11 +1,14 @@
 {% extends 'layouts/base.html' %}
 
-
+{% block title%}Profile{% endblock title %}
 {% block content %}
 {% if user !=  None %}
-<h2>{{user.groups.all.0}} Profile</h2>
+<h2>
+    {% if user.groups.first.name is null %}
+        Admin
+    {% endif %}
+    {{user.groups.first.name}} Profile
+</h2>
 {% endif %}
-
 <br>
-
 {% endblock%}

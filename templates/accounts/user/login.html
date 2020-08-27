@@ -3,12 +3,25 @@
 {% block title %} Login {% endblock %}
 
 {% block content%}
-  <h2>Login</h2>
-  
+<div>
+  <!-- <h2>Login</h2>
   <form method="POST">{% csrf_token %} 
-
     {{ form.as_p}}
-
     <button type="submit">Login</button>
-  </form>
+  </form> -->
+  <form method="post">   
+    <table class="tabal table-sm">
+        <tr>
+            <td><label for="Email">Email Address:</label></td>
+            <td ><input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="254" required="" id="id_username"></td>
+        </tr>
+        <tr>
+          <td><label for="password">Password:</label></td>
+          <td ><input type="password" name="password" autocomplete="current-password" required="" id="id_password"></td>
+      </tr>
+    </table>        
+    {% csrf_token %}
+    <input type="submit"  value="Login">
+</form>
+</div>
 {% endblock %}

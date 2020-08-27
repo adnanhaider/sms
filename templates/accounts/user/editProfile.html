@@ -1,10 +1,29 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-<h2>Edit Profile</h2>
-<form method=POST>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="save">
-</form>
+<div>
+    <h2>Edit Profile</h2>
+    <form method=POST>
+        {% csrf_token %}
+        <!-- {{form.as_p}} -->
+        <table class="tabal table-sm">
+            <tr>
+                <td><label for="Email">Email Address:</label></td>
+                <td ><input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="254" required="" id="id_username"></td>
+            </tr>
+            <tr>
+              <td><label for="id_first_name">First Name:</label></td>
+              <td><input type="text" name="first_name" maxlength="30" id="id_first_name"></td>
+            </tr>
+            <tr>
+              <td><label for="id_last_name">Last name:</label></td>
+              <td><input type="text" name="last_name" maxlength="30" id="id_last_name"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="save"></td>
+                <td></td>
+            </tr>
+        </table>  
+    </form>
+</div>
 {% endblock%}
