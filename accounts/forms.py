@@ -126,11 +126,7 @@ class StudentProfileForm(ProfileForm):
             can_add_related=True,
         )
     )
-
-    CHOICES = ClassRoom.objects.values_list('room_number',flat=True)
-    CHOICES = list(CHOICES)
-    class_room = forms.ChoiceField(widget=forms.Select(choices=CHOICES))
-
+    
     def __init__(self, *args, **kwargs):
         super(StudentProfileForm, self).__init__(*args, **kwargs)
         self.fields['guardian'].widget.attrs.update({'class': 'custom-select-lg', 
