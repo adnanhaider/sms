@@ -1,8 +1,11 @@
 {% extends 'layouts/base.html' %}
+{% block title%}Create Student{% endblock title %}
+{% load subtract %}
 {% block content %}
 {% include 'includes/foreignkeypopupscripts.html'%}
-<div>
-    <h3>Create Student</h3>
+<div class="container">
+    <h3>Create Student Profile</h3>
+    <hr>
     <form enctype="multipart/form-data" action="" method="post" id="student_form" novalidate="">
         
         <table class="tabal table-sm">
@@ -19,26 +22,22 @@
             <tr>
                 <td><label for="class_room">Select Class Room:</label></td>
                 <td>
-                    <select class="selectpicker form-control" title="Choose Class Room" id="select_class_room"
-                      name='class_room' data-live-search-placeholder="Search class room" data-live-search="true">
-                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <select class="form-control" title="Choose Class Room" id="select_class_room" style="font-family: 'FontAwesome';" name='class_room'>
+                    <option selected="selected" hidden="hidden">Choose Class Room</option>
                     {% for class_room, pair in class_rooms_with_student_count_dictionary.items %}
                         {% for student_count, student_capacity in pair.items %}
                             {% if student_count < student_capacity %}    
-                                <option value={{class_room.room_number}} data-tokens="{{class_room}}"
-                                data-content="<i class='fas fa-door-open' style='color:green'></i>
-                                {{class_room}}
-                                <span class='badge progress-bar-success'>
-                                    {{student_count}}|{{student_capacity}}
-                                </span>">
+                                <option value={{class_room.room_number}}>
+                                    {{class_room}} | &#xf007; &nbsp;
+                                    {% if student_capacity|subtract:student_count == 1 %}
+                                    {{ student_capacity|subtract:student_count }} Seat Remaining
+                                    {% else %}
+                                    {{ student_capacity|subtract:student_count }} Seats Remaining
+                                    {% endif %}
                                 </option>
                              {% else %}
-                                <option disabled=True value={{class_room.room_number}} data-tokens="{{class_room.room_number}}"
-                                data-content="<i class='fas fa-door-closed' style='color:red'></i>
-                                {{class_room}}
-                                <span class='badge progress-bar-danger'>
-                                    {{student_count}}|{{student_capacity}}
-                                </span>">>
+                                <option disabled=True value={{class_room.room_number}}>
+                                    {{class_room}} | &#xf235; No Seat Remaining
                                 </option>
                             {%endif%}  
                             {% endfor %}
@@ -46,12 +45,10 @@
                     </select>
                 </td>
             </tr>
-            {%if std_profile_form.class_room.errors %}
                 <tr>
                     <td></td>
-                    <td ><p class="text-danger">{{ std_profile_form.class_room_list.errors|striptags }}</p></td>
+                    <td ><p class="text-danger">{{ msg }}</p></td>
                 </tr>
-            {% endif%}
             <tr>
                 <td><label for="email">Student Email:</label></td>
                 <td>{{ std_user_form.email}}</td>
@@ -140,10 +137,11 @@
         <input type="submit" class="btn btn-secondary" value="Create Student">
     </form>
 </div>
-    {% include 'includes/select-styling.html' %}
     <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
 
 {% endblock content %}
 
 {% block script %}
+
 {% endblock script %}

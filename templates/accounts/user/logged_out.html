@@ -1,7 +1,8 @@
 {% extends 'layouts/base.html' %} {% block title %}Logout{% endblock %} 
 {% block content%}
-<div>
+<div class="container">
     <h3>Your're Logged out</h3>
+    <hr>
     <p>Thanks for spending some quality time with the Web site today.</p>
     <a href={% url 'accounts:login' %}>Log in again</a>
 </div>

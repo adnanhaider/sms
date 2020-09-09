@@ -8,7 +8,7 @@ def home(request):
     return render(request, 'campus/home.html')
 
 class AddLevel(View):
-    template_name = 'campus/add_level.html'
+    template_name = 'campus/level/add_level.html'
     def get(self, request):
         form =  AddLevelForm(request.POST or None)
         context = { 'form': form }
@@ -24,21 +24,21 @@ class AddLevel(View):
             return render(request, self.template_name,{'form':form, 'msg': msg})
 
 class Levels(View):
-    template_name = 'campus/levels.html'
+    template_name = 'campus/level/levels.html'
     def get(self, request):
         levels = Level.objects.all()
         context = { 'levels': levels }
         return render(request, self.template_name, context)
 
 class ClassRooms(View):
-    template_name = 'campus/class_rooms.html'
+    template_name = 'campus/class_room/class_rooms.html'
     def get(self, request):
         class_rooms = ClassRoom.objects.all()
         context = { 'class_rooms': class_rooms }
         return render(request, self.template_name, context)
 
 class AddClassRoom(View):
-    template_name = 'campus/add_class_room.html'
+    template_name = 'campus/class_room/add_class_room.html'
     def get(self, request):
         form =  AddClassRoomForm(request.POST or None)
         context = { 'form': form }

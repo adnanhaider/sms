@@ -21,6 +21,12 @@ urlpatterns = [
     path('parent-dashboard/', views.ParentIndexView.as_view(), name='parentIndex'),
     path('student-dashboard/', views.StudentIndexView.as_view(), name='studentIndex'),
 
+    # principal usecases urls
+    path('approve-teacher/', views.ApproveTeacherView.as_view(), name='approve_teacher'),
+    path('approve-student/', views.ApproveStudentView.as_view(), name='approve_student'),
+    path('approve-parent/', views.ApproveParentView.as_view(), name='approve_parent'),
+
+
 ] 
 
 

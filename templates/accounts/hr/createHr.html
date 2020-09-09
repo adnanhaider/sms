@@ -1,75 +1,75 @@
 {% extends 'layouts/base.html' %}
+{% block title%}Create Hr{% endblock title %}
 {% block content %}
-
 <div class="container">
     <h3>Create HR Profile</h3>
-    <form method="POST">
-        <table class="tabal table-sm">
-            <tr>
-                <td><label for="email">Email:</label></td>
-                <td>{{ form.email}}</td>
-            </tr>
-            <tr>
-                <td><label for="password1">Password:</label></td>
-                <td>{{ form.password1}}</td>
-            </tr>
-            <tr>
-                <td><label for="password2">Confirm Password:</label></td>
-                <td>{{ form.password2}}</td>
-            </tr>
-            <tr>
-                <td><label for="first_name">First Name:</label></td>
-                <td>{{ form.first_name}}</td>
-            </tr>
-            <tr>
-                <td><label for="last_name">Last Name:</label></td>
-                <td>{{ form.last_name}}</td>
-            </tr>
-            <tr>
-                <td><label for="gender">Gender:</label></td>
-                <td>{{ profile_form.gender}}</td>
-            </tr>
-            <tr>
-                <td><label for="photo">Photo:</label></td>
-                <td>{{ profile_form.photo}}</td>
-            </tr>
-            <tr>
-                <td><label for="birth_date">Date of Birth:</label></td>
-                <td>{{ profile_form.birth_date}}</td>
-            </tr>
-            <tr>
-                <td><label for="salary">Salary:</label></td>
-                <td>{{ profile_form.salary}}</td>
-            </tr>
-            <tr>
-                <td><label for="contact_number">Contact Number:</label></td>
-                <td>{{ profile_form.contact_number}}</td>
-            </tr>
-            <tr>
-                <td><label for="house_number">House Number:</label></td>
-                <td>{{ address_form.house_number}}</td>
-            </tr>
-            <tr>
-                <td><label for="house_number">Street Number:</label></td>
-                <td>{{ address_form.street_number}}</td>
-            </tr>
-            <tr>
-                <td><label for="town">Town:</label></td>
-                <td>{{ address_form.town}}</td>
-            </tr>
-            <tr>
-                <td><label for="city">City:</label></td>
-                <td>{{ address_form.city}}</td>
-            </tr>
-            <tr>
-                <td><label for="state">State:</label></td>
-                <td>{{ address_form.state}}</td>
-            </tr>
-        </table>
-        {% csrf_token %}
-        {{profile_form.errors}}
-        <input type="submit" value="Create">
-    </form>
-</div>
-{% include 'includes/select-styling.html' %}
+    <hr>
+        <form method="POST">
+            <table class="tabal table-sm">
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td>{{ form.email}}</td>
+                </tr>
+                <tr>
+                    <td><label for="password1">Password:</label></td>
+                    <td>{{ form.password1}}</td>
+                </tr>
+                <tr>
+                    <td><label for="password2">Confirm Password:</label></td>
+                    <td>{{ form.password2}}</td>
+                </tr>
+                <tr>
+                    <td><label for="first_name">First Name:</label></td>
+                    <td>{{ form.first_name}}</td>
+                </tr>
+                <tr>
+                    <td><label for="last_name">Last Name:</label></td>
+                    <td>{{ form.last_name}}</td>
+                </tr>
+                <tr>
+                    <td><label for="gender">Gender:</label></td>
+                    <td>{{ profile_form.gender}}</td>
+                </tr>
+                <tr>
+                    <td><label for="photo">Photo:</label></td>
+                    <td>{{ profile_form.photo}}</td>
+                </tr>
+                <tr>
+                    <td><label for="birth_date">Date of Birth:</label></td>
+                    <td>{{ profile_form.birth_date}}</td>
+                </tr>
+                <tr>
+                    <td><label for="salary">Salary:</label></td>
+                    <td>{{ profile_form.salary}}</td>
+                </tr>
+                <tr>
+                    <td><label for="contact_number">Contact Number:</label></td>
+                    <td>{{ profile_form.contact_number}}</td>
+                </tr>
+                <tr>
+                    <td><label for="house_number">House Number:</label></td>
+                    <td>{{ address_form.house_number}}</td>
+                </tr>
+                <tr>
+                    <td><label for="house_number">Street Number:</label></td>
+                    <td>{{ address_form.street_number}}</td>
+                </tr>
+                <tr>
+                    <td><label for="town">Town:</label></td>
+                    <td>{{ address_form.town}}</td>
+                </tr>
+                <tr>
+                    <td><label for="city">City:</label></td>
+                    <td>{{ address_form.city}}</td>
+                </tr>
+                <tr>
+                    <td><label for="state">State:</label></td>
+                    <td>{{ address_form.state}}</td>
+                </tr>
+            </table>
+            {% csrf_token %}
+            {{profile_form.errors}}
+            <input type="submit" value="Create">
+        </form>
+    </div>
 {% endblock %}

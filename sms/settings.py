@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # user created apps
     'accounts.apps.AccountsConfig',
     'campus.apps.CampusConfig',
-    'widget_tweaks',
+    # 'widget_tweaks',
 ]
 AUTH_USER_MODEL = 'accounts.User' # this changes the built-in user model to ours
 

@@ -86,7 +86,7 @@ class ClassRoom(models.Model):
     student_capacity = models.IntegerField(default=30)
     incharge = models.ForeignKey(Teacher, on_delete=models.DO_NOTHING)
     def __str__(self):
-        return '%s %s ( room # %s )' % (self.level, self.section, self.room_number)
+        return '%s %s Room %s ' % (self.level, self.section, self.room_number)
     class Meta:
         db_table = "ClassRoom"
         verbose_name = _('Class Room')

@@ -1,7 +1,8 @@
 {% extends 'layouts/base.html' %}
+{% block title%}Levels{% endblock title %}
 {% block content %}
 <div class="container">
-    <h3>Level we teach</h3>
+    <h3>Levels we teach</h3>
     <table class="table table-sm table-striped">
         <thead>
             <tr>
@@ -11,17 +12,17 @@
         </thead>
         <tbody>
             {% for level in levels %}
-                <tr>
-                    <th>{{ forloop.counter }}</th>
-                    <td>{{level.name}}</td>
-                </tr>
+            <tr>
+                <th>{{ forloop.counter }}</th>
+                <td>{{level.name}}</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
-    
     <a href="{% url 'campus:add_level' %}">Add New Level</a>
+    <hr>
+    <p><sup>*</sup> Levels define the standard of school, like primary school, middle school, or higher secondary school in this system</p>
 </div>
 {% endblock content %}
-
 {% block script %}
 {% endblock script %}

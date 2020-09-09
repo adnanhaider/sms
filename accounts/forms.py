@@ -5,10 +5,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
-
 from .sites import accounts_admin_site
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control'}))
@@ -92,15 +91,6 @@ class ProfileForm(forms.ModelForm):
             'contact_number',
         ]
         widgets = {'birth_date': DateInput()}
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        qs = User.objects.filter(email=email)
-        if qs.exists():
-            raise forms.ValidationError(str(email) + ' is taken')
-        return email
-    # deact_number = self.cleaned_data.get('contact_number')
-
-    
 
 class PrincipalProfileForm(ProfileForm):
     class Meta:
@@ -129,16 +119,10 @@ class StudentProfileForm(ProfileForm):
     
     def __init__(self, *args, **kwargs):
         super(StudentProfileForm, self).__init__(*args, **kwargs)
-        self.fields['guardian'].widget.attrs.update({'class': 'custom-select-lg', 
-                # 'data-live-search': 'true',
-                # 'data-live-search-placeholder':'Search by name or email',
-            })
+        self.fields['guardian'].widget.attrs.update({'class': 'custom-select-sm'})
     class Meta:
         model = Student
         exclude = ['user', 'guardian', 'salary', 'date_left', 'contact_number', 'status', 'reg_number', 'roll_number']
-    
-    
-
 
 class ParentProfileForm(ProfileForm):
     class Meta:
@@ -199,4 +183,3 @@ class UserAdminChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
-

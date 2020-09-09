@@ -1,35 +1,69 @@
-
-<div class="c-sidebar c-sidebar-dark c-sidebar-show">
-    <ul class="c-sidebar-nav">
-      <li class="c-sidebar-nav-title">Principal</li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href={% url 'accounts:create_hr' %}>
-          <i class="c-sidebar-nav-icon cil-speedometer"></i> Create HR
-        </a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="#">
-          <i class="c-sidebar-nav-icon cil-speedometer"></i> Approve Account
-          <!-- <span class="badge badge-primary">NEW</span> -->
-        </a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="#">
-          <i class="c-sidebar-nav-icon cil-speedometer"></i> Leaves & Salaries
-          <!-- <span class="badge badge-primary">NEW</span> -->
-        </a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="#">
-          <i class="c-sidebar-nav-icon cil-speedometer"></i> Event
-          <!-- <span class="badge badge-primary">NEW</span> -->
-        </a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="#">
-          <i class="c-sidebar-nav-icon cil-speedometer"></i>  View Progress
-          <!-- <span class="badge badge-primary">NEW</span> -->
-        </a>
-      </li>
-    </ul>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+                    <a class="nav-link" href="index.html">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Dashboard</a>
+                    <!-- <div class="sb-sidenav-menu-heading">Interface</div> -->
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                        ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Approve Account
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                    ></a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href={% url 'accounts:approve_teacher' %}>Approve Teacher</a>
+                            <a class="nav-link" href={% url 'accounts:approve_parent' %}>Approve Parent</a>
+                            <a class="nav-link" href={% url 'accounts:approve_student' %}>Approve Student</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
+                        ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Accounts
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                    ></a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
+                                >Create Accounts
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href={% url 'accounts:create_hr'%}>Create Hr</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
+                                >Approve Accounts
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href={% url 'accounts:approve_teacher' %}>Approve Teacher</a>
+                                    <a class="nav-link" href={% url 'accounts:approve_parent' %}>Approve Parent</a>
+                                    <a class="nav-link" href={% url 'accounts:approve_student' %}>Approve Student</a>
+                                </nav>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- <div class="sb-sidenav-menu-heading">Addons</div> -->
+                    <a class="nav-link" href="charts.html"
+                        ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Charts</a
+                    ><a class="nav-link" href="tables.html"
+                        ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Tables</a
+                    >
+                </div>
+            </div>
+        </nav>
+    </div>
+  
+    <div id="layoutSidenav_content" class="ml-5">
+        {% block content %}
+        {% endblock %}
+    </div>
   </div>

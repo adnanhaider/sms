@@ -207,17 +207,15 @@ class Parent(Profile):
         return True
 
 class Student(Profile):
-    salary = None
-    contact_number = None
-    address = None
     reg_number = models.CharField(primary_key=True, max_length=30, unique=True)
     roll_number = models.PositiveIntegerField()
     STATUS_CHOICES = [('A', 'Active'), ('I', 'Inactive')]
     status = models.CharField(max_length=1, default='A', choices=STATUS_CHOICES)
     guardian = models.ForeignKey("Parent", on_delete=models.CASCADE)
-
-    USERNAME_FIELD = 'roll_number'
-    REQUIRED_FIELDS = []
+    salary = None
+    contact_number = None
+    address = None
+    
     class Meta:
         db_table = 'Student'
         verbose_name = _('student')

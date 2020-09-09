@@ -1,9 +1,13 @@
 {% extends 'layouts/base.html' %}
+{% block title%}Add Class Room{% endblock title %}
+
 {% block content %}
 {% include 'includes/foreignkeypopupscripts.html'%}
 
+
 <div class="container">
     <h3>Add Class Room</h3>
+    <hr>
     <form method="POST">
         <table class="table-sm">
             <tr>
@@ -44,16 +48,29 @@
             </tr>
             <tr>
                 <td></td>
-                <td ><p class="text-danger">{{ form.incharge.errors|striptags }}</p></td>
+                <td><p class="text-danger">{{ form.incharge.errors|striptags }}</p></td>
             </tr>
         </table>
         {% csrf_token %}
-        <input type="submit" class="btn btn-secondary" value="Add Class Room ">
-        
-        <a href="{% url 'campus:class_rooms' %}">View Class Rooms</a>
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="submit" id='submit' class="btn btn-light" value="Add Class Room ">
+            </div>
+            <div class="col-sm-6">
+                <a href="{% url 'campus:class_rooms' %}">View Class Rooms</a>
+            </div>
+        </div>
     </form>
 </div>
+
 {% endblock content %}
 
 {% block script %}
+<!-- <script>
+    document.getElementById('submit').addEventListener('click', addClassRoomAsyncly);
+    function addClassRoomAsyncly(){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', )
+    }
+</script> -->
 {% endblock script %}

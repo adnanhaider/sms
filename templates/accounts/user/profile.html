@@ -1,14 +1,19 @@
 {% extends 'layouts/base.html' %}
-
 {% block title%}Profile{% endblock title %}
 {% block content %}
-{% if user !=  None %}
-<h2>
-    {% if user.groups.first.name is null %}
-        Admin
+    {% if user !=  None %}
+        {% if user.groups.first.name is null %}
+            {% include "accounts/developer/index.html" %}
+        {% elif user.groups.first.name == 'Principal' %}
+            {% include "accounts/principal/index.html" %}
+        {% elif user.groups.first.name == 'HR' %}
+            {% include "accounts/hr/index.html" %}
+        {% elif user.groups.first.name == 'Student' %}
+            {% include "accounts/student/index.html" %}
+        {% elif user.groups.first.name == 'Teacher'%}
+            {% include "accounts/teacher/index.html"%}
+        {% elif user.groups.first.name == 'Parent' %}
+            {% include "accounts/parent/index.html"%}
+        {% endif %}
     {% endif %}
-    {{user.groups.first.name}} Profile
-</h2>
-{% endif %}
-<br>
 {% endblock%}

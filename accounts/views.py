@@ -96,6 +96,7 @@ class CreateTeacherUser(View):
         user_form = RegisterForm(request.POST or None)
         profile_form = TeacherProfileForm(request.POST or None)
         address_form = AddressForm(request.POST or None)
+        context = {'form':user_form, 'address_form': address_form, 'profile_form':profile_form}
         if request.method == 'POST':
             if user_form.is_valid() and address_form.is_valid() and profile_form.is_valid():
                 user_instance = user_form.save()
@@ -112,6 +113,8 @@ class CreateTeacherUser(View):
                     address = address_instance,
                 )
                 return redirect('accounts:teacherIndex',)
+            else:
+                return render(request, 'accounts/teacher/createTeacher.html', context)
 
 class CreateParentUser(View):
     def get(self, request):
@@ -157,7 +160,8 @@ class CreateStudentUser(View):
         class_rooms_with_student_count_dictionary = {}
         for class_room in class_rooms:
             class_rooms_with_student_count_dictionary.update(
-                {class_room: {self.getStudentCountInClass(class_room): class_room.student_capacity}})
+                {class_room: { self.getStudentCountInClass(class_room) : class_room.student_capacity}})
+        
         context = {
             'std_user_form': std_user_form,
             'std_profile_form': std_profile_form,
@@ -181,7 +185,6 @@ class CreateStudentUser(View):
             'parents': parents,
             'class_rooms_with_student_count_dictionary': class_rooms_with_student_count_dictionary
         }
-        print(std_profile_form.is_valid())
         if std_user_form.is_valid() and std_profile_form.is_valid():
             std_user_instance = std_user_form.save()
             std_user_instance.groups.add(Group.objects.get(name='Student'))
@@ -199,8 +202,10 @@ class CreateStudentUser(View):
                 status = 'A', # student will be active on creation and Inactive only when passed out of left school
                 guardian = get_object_or_404(Parent, id=parent_obj)
             )
+
             student_class_room = ClassRoomStudents.objects.create(
                 class_room = get_object_or_404(ClassRoom, pk=class_room_obj),
+
                 student = get_object_or_404(Student, pk=std_instance.reg_number),
                 session = datetime.datetime.now().year
             )
@@ -235,3 +240,18 @@ class StudentIndexView(View):
     def get(self, request):
         context={}
         return render(request, 'accounts/student/index.html', context)
+
+class ApproveTeacherView(View):
+    def get(self, request):
+        context={}
+        return render(request, 'accounts/principal/approve_teacher.html', context)
+
+class ApproveParentView(View):
+    def get(self, request):
+        context={}
+        return render(request, 'accounts/principal/approve_parent.html', context)
+
+class ApproveStudentView(View):
+    def get(self, request):
+        context={}
+        return render(request, 'accounts/principal/approve_student.html', context)

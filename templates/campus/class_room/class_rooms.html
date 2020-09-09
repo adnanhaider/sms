@@ -1,15 +1,18 @@
 {% extends 'layouts/base.html' %}
+{% block title%}Class Rooms{% endblock title %}
+
 {% block content %}
 <div class="container">
-    <h3>List of Class Rooms</h3>
+        <h3>List of Class Rooms</h3>
+    <br>
     <table class="table table-sm table-striped">
         <thead>
             <tr>
                 <th>S.No.</th>
                 <th>Room Number</th>
-                <th>Section</th>
                 <th>Student Capacity</th>
                 <th>Level</th>
+                <th>Section</th>
                 <th>Incharge</th>
             </tr>
         </thead>
@@ -18,9 +21,9 @@
                 <tr>
                     <th>{{ forloop.counter }}</th>
                     <td>{{room.room_number}}</td>
-                    <td>{{room.section}}</td>
                     <td>{{room.student_capacity}}</td>
                     <td>{{room.level}}</td>
+                    <td>{{room.section}}</td>
                     <td>{{room.incharge}}</td>
                 </tr>
             {% endfor %}
