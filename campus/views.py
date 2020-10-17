@@ -51,3 +51,69 @@ class AddClassRoom(View):
             return redirect('campus:class_rooms')
         else:
             return render(request, self.template_name, {'form':form})
+
+class HrAttendance(View):
+    template_name = 'campus/attendance/make_hr_attendance.html'
+    def get(self, request):
+        form = AddHrAttendanceForm(request.POST or None)
+        hr_list = HrStaff.objects.all() 
+        dateToday = datetime.date.today
+        context = {'form': form, 'hr_list': hr_list, 'date': dateToday}
+        return render(request, self.template_name, context)
+    
+    def post(self, request):
+        form = AddHrAttendanceForm(request.POST or None)
+        hr_list = HrStaff.objects.all()
+        dateToday = datetime.date.today
+        context = {'form': form, 'hr_list': hr_list, 'date':dateToday}
+        # print(form.is_valid())
+        # print('------------------------------')
+        if form.is_valid():
+            for hr in hr_list:
+                obj = HrStaffAttendance.objects.create(
+                    hrStaff=hr.user,
+                    status=form.cleaned_data.get('status').filter(form.hrStaff==hr.user),
+                    date=dateToday
+                )
+            form.save()
+            return redirect('campus:todays_hr_attendance')
+        else:
+            return render(request, self.template_name, context)
+
+# class TodaysHrAttendance(View):
+#     template_name = 'campus/attendance/make_hr_attendance.html'
+#     def get(self, request):
+#         form = AddHrAttendanceForm(request.POST or None)
+#         hr_list = HrStaff.objects.all()
+#         dateToday = datetime.date.today
+#         hr_attendance_list = HrStaffAttendance.objects.filter(date=datetime.datetime.now)
+#         context = {'form': form, 'hr_list': hr_attendance_list, 'date':dateToday}
+#         return render(request, self.template_name, context)
+
+class GetHrAttendance(View):
+    template_name = 'campus/attendance/get_hr_attendance.html'
+    def get(self, request):
+        form = AddHrAttendanceForm(request.POST or None)
+        hr_list = HrStaff.objects.all()
+        dateToday = datetime.date.today
+        context = {'form': form, 'hr_list': hr_list, 'date':dateToday}
+        return render(request, self.template_name, context)
+
+class GetTeacherAttendance(View):
+    template_name = 'campus/attendance/get_hr_attendance.html'
+    def get(self, request):
+        form = AddHrAttendanceForm(request.POST or None)
+        hr_list = HrStaff.objects.all()
+        dateToday = datetime.date.today
+        context = {'form': form, 'hr_list': hr_list, 'date':dateToday}
+        return render(request, self.template_name, context)
+
+class GetStudentAttendance(View):
+    template_name = 'campus/attendance/get_hr_attendance.html'
+    def get(self, request):
+        form = AddHrAttendanceForm(request.POST or None)
+        hr_list = HrStaff.objects.all()
+        dateToday = datetime.date.today
+        context = {'form': form, 'hr_list': hr_list, 'date':dateToday}
+        return render(request, self.template_name, context)
+

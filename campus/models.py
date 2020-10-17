@@ -7,12 +7,10 @@ from django.urls import reverse
 
 class HrStaffAttendance(models.Model):
     hrStaff = models.ForeignKey(HrStaff, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(default=datetime.datetime.now)
     STATUS_CHOICES = [('P', 'Present'), ('A', 'Absent'), ('L', 'Leave')]
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
 
-    # def get_absolute_url(self):
-    #     return reverse("campus:HrStaff-Attendance", kwargs={'id':id})
     def __str__(self):
         return '%s' % (self.status)
 
@@ -347,6 +345,4 @@ class EventInvites(models.Model):
         unique_together = ('parent', 'event')
         verbose_name = _('Event Invites')
         verbose_name_plural = _('Event Invites')
-
-    
 

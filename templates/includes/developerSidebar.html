@@ -8,12 +8,12 @@
                       <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                       Dashboard</a>
                   <!-- <div class="sb-sidenav-menu-heading">Interface</div> -->
-                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCreateAccount" aria-expanded="false" aria-controls="collapseCreateAccount"
                       ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                       Create Accounts
                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
                   ></a>
-                  <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                  <div class="collapse" id="collapseCreateAccount" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                       <nav class="sb-sidenav-menu-nested nav">
                           <a class="nav-link" href={% url 'accounts:create_principal' %}>Principal</a>
                           <a class="nav-link" href={% url 'accounts:create_hr' %}>HR</a>
@@ -22,44 +22,42 @@
                           <a class="nav-link" href={% url 'accounts:create_student' %}>Student</a>
                     </nav>
                   </div>
-                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
-                      ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                      Pages
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseViewAccounts" aria-expanded="false" aria-controls="collapseViewAccounts"
+                      ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                      View Accounts
                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
                   ></a>
-                  <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                      <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                  <div class="collapse" id="collapseViewAccounts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                      <nav class="sb-sidenav-menu-nested nav">
+                          <a class="nav-link" href={% url 'accounts:view_principal' %}>Principal</a>
+                          <a class="nav-link" href={% url 'accounts:view_hr' %}>HR</a>
+                          <a class="nav-link" href={% url 'accounts:view_teacher' %}>Teacher</a>
+                          <a class="nav-link" href={% url 'accounts:view_parent' %}>Parent</a>
+                          <a class="nav-link" href={% url 'accounts:view_student' %}>Student</a>
+                    </nav>
+                  </div>
+                      <nav class="sb-sidenav-menu nav accordion" id="sidenavAccordionPages">
                           <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
-                              >Campus
+                              ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Campus
                               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
                           ></a>
                           <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
                               <nav class="sb-sidenav-menu-nested nav">
                                   <a class="nav-link" href={% url 'campus:add_level' %}>Add Level</a>
+                                  <a class="nav-link" href={% url 'campus:levels' %}>View Levels</a>
                                   <a class="nav-link" href={% url 'campus:add_class_room' %}>Add Class Room</a>
-                                </nav>
-                          </div>
-                          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
-                              >Error
-                              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                          ></a>
-                          <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                              <nav class="sb-sidenav-menu-nested nav">
-                                  <a class="nav-link" href="401.html">401 Page</a>
-                                  <a class="nav-link" href="404.html">404 Page</a>
-                                  <a class="nav-link" href="500.html">500 Page</a>
+                                  <a class="nav-link" href={% url 'campus:class_rooms' %}>View Class Rooms</a>
                                 </nav>
                           </div>
                       </nav>
-                  </div>
                   <!-- <div class="sb-sidenav-menu-heading">Addons</div> -->
-                  <a class="nav-link" href="charts.html"
+                  <!-- <a class="nav-link" href="charts.html"
                       ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                       Charts</a
                   ><a class="nav-link" href="tables.html"
                       ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                       Tables</a
-                  >
+                  > -->
               </div>
           </div>
       </nav>

@@ -1,6 +1,8 @@
 
 from django.contrib import admin
 from django.urls import path, reverse_lazy, include
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 from django.contrib.auth.views import (
     PasswordChangeView, PasswordChangeDoneView,
@@ -39,3 +41,4 @@ urlpatterns = [
     path('reset/done/', PasswordResetCompleteView.as_view
     (template_name='passwords/password_reset_complete.html'), name='password_reset_complete'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

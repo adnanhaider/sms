@@ -1,4 +1,37 @@
 <div class="container">
     <h1>Developer index</h1>
     <hr>
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <a href="{% url 'accounts:view_principal' %}" class="btn btn-light">View Principals</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+                <a href="{% url 'accounts:view_hr' %}" class="btn btn-light">View HRs</a>
+              </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <a href="{% url 'accounts:view_teacher' %}" class="btn btn-light">View Teachers</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <a href="{% url 'accounts:view_student' %}" class="btn btn-light">View Students</a>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>

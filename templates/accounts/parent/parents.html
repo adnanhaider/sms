@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html' %}
+{% block title%}Parents{% endblock title %}
+
+{% block content %}
+<div class="container">
+        <h3>List of Parents</h3>
+    <br>
+    <table class="table table-lg table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Staus</th>
+                <th>Birth Date</th>
+                <th>Contact Number</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parent in parents %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{parent.user.first_name}}</td>
+                    <td>{{parent.user.last_name}}</td>
+                    <td>{{parent.user.email}}</td>
+                    <td>{% if parent.user.is_active %} Active {%else%} In-Active {% endif %}</td>
+                    <td>{{parent.birth_date}}</td>
+                    <td>{{parent.contact_number}}</td>
+                    <td>
+                        {% if parent.photo %}
+                            <img class='rounded-circle card-img' src={{ parent.photo.url }}/>
+                        {% else %}
+                            <img class="rounded-circle card-img " src='/media/images/default.jpg'/>
+                        {% endif %}
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'accounts:create_parent' %}">Add New Parent</a>
+</div>
+{% endblock content %}
+{% block script %}
+{% endblock script %}

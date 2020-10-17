@@ -15,6 +15,12 @@ urlpatterns = [
     path('create-parent/', views.CreateParentUser.as_view(), name='create_parent'),
     path('create-student/', views.CreateStudentUser.as_view(), name='create_student'),
 
+    path('view-principal/', views.ViewPrincipalUser.as_view(), name='view_principal'),
+    path('view-hr/', views.ViewHrUser.as_view(), name='view_hr'),
+    path('view-teacher/', views.ViewTeacherUser.as_view(), name='view_teacher'),
+    path('view-parent/', views.ViewParentUser.as_view(), name='view_parent'),
+    path('view-student/', views.ViewStudentUser.as_view(), name='view_student'),
+
     path('principal-dashboard/', views.PrincipalIndexView.as_view(), name='principalIndex'),
     path('hr-dashboard/', views.HrIndexView.as_view(), name='hrIndex'),
     path('teacher-dashboard/', views.TeacherIndexView.as_view(), name='teacherIndex'),

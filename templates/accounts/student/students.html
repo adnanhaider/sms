@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+{% block title%}Students{% endblock title %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+        <h3>List of Students</h3>
+    <br>
+    <table class="table table-lg table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <!-- <th>Staus</th> -->
+                <th>Birth Date</th>                
+                <th>Guardian</th>                
+                <th>Class Room</th>
+                <th>Registeration</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{student.user.first_name}}</td>
+                    <td>{{student.user.last_name}}</td>
+                    <td>{{student.user.email}}</td>
+                    <!-- <td>{% if student.user.is_active %} Active {%else%} In-Active {% endif %}</td> -->
+                    <td>{{student.birth_date}}</td>                    
+                    <td>{{student.guardian}}</td>                    
+                    <td>
+                        {% for record in class_room_students %}
+                            {% if record.student_id == student.reg_number %}
+                                {{record.class_room}}    
+                            {% endif %} 
+                        {% endfor %}
+                    </td>
+                    <td>{{ student.reg_number }}</td>
+                    <td>
+                        {% if student.photo %}
+                            <img class='rounded-circle card-img' src={{ student.photo.url }}/>
+                        {% else %}
+                            <img class="rounded-circle card-img " src='/media/images/default.jpg'/>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'accounts:create_student' %}">Add New Student</a>
+</div>
+{% endblock content %}
+{% block script %}
+{% endblock script %}

@@ -1,0 +1,47 @@
+{% extends 'layouts/base.html' %}
+{% block title%}Principals' List{% endblock title %}
+
+{% block content %}
+<div class="container">
+        <h3>List of Principals</h3>
+    <br>
+    <table class="table table-lg table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Status</th>
+                <th>Birth Date</th>
+                <th>Contact Number</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for principal in principals %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{ principal.user.first_name }}</td>
+                    <td>{{ principal.user.last_name }}</td>
+                    <td>{% if principal.user.is_active %} Active {% else %} In-Active {% endif %}</td>
+                    <td>{{ principal.birth_date }}</td>
+                    <td>{{ principal.contact_number }}</td>
+                    <td>
+                        {% if principal.photo %}
+                            <img class='rounded-circle card-img' src={{ principal.photo.url }}/>
+                        {% else %}
+                            <img class="rounded-circle card-img" src='/media/images/default.jpg'/>
+                        {% endif %}
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'accounts:create_principal' %}">Add New principal</a>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

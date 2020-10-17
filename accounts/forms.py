@@ -116,7 +116,6 @@ class StudentProfileForm(ProfileForm):
             can_add_related=True,
         )
     )
-    
     def __init__(self, *args, **kwargs):
         super(StudentProfileForm, self).__init__(*args, **kwargs)
         self.fields['guardian'].widget.attrs.update({'class': 'custom-select-sm'})

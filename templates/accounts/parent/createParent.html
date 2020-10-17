@@ -6,44 +6,98 @@
 <div class="container">
     <h3>Create Parent Profile</h3>
     <hr>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <table class="tabal table-sm">
             <tr>
                 <td><label for="email">Email:</label></td>
                 <td>{{ form.email}}</td>
             </tr>
+            {%if form.email.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ form.email.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="password1">Password:</label></td>
                 <td>{{ form.password1}}</td>
             </tr>
+            {%if form.password1.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ form.password1.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="password2">Confirm Password:</label></td>
                 <td>{{ form.password2}}</td>
             </tr>
+            {%if form.password2.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ form.password2.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="first_name">First Name:</label></td>
                 <td>{{ form.first_name}}</td>
             </tr>
+            {%if form.first_name.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ form.first_name.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="last_name">Last Name:</label></td>
                 <td>{{ form.last_name}}</td>
             </tr>
+            {%if form.last_name.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ form.last_name.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="gender">Gender:</label></td>
                 <td>{{ profile_form.gender}}</td>
             </tr>
+            {%if profile_form.gender.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ profile_form.gender.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="photo">Photo:</label></td>
                 <td>{{ profile_form.photo}}</td>
             </tr>
+            {%if profile_form.photo.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ profile_form.photo.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="birth_date">Date of Birth:</label></td>
                 <td>{{ profile_form.birth_date}}</td>
             </tr>
+            {%if profile_form.birth_date.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ profile_form.birth_date.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="contact_number">Contact Number:</label></td>
                 <td>{{ profile_form.contact_number}}</td>
             </tr>
+            {%if profile_form.contact_number.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ profile_form.contact_number.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="house_number">House Number:</label></td>
                 <td>{{ address_form.house_number}}</td>
@@ -52,18 +106,40 @@
                 <td><label for="house_number">Street Number:</label></td>
                 <td>{{ address_form.street_number}}</td>
             </tr>
+            {%if address_form.street_number.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ address_form.street_number.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="town">Town:</label></td>
                 <td>{{ address_form.town}}</td>
             </tr>
+            {%if address_form.town.errors %}
+                <tr>
+                    <td></td>
+                    <td ><p class="text-danger">{{ address_form.town.errors|striptags }}</p></td>
+                </tr>
+            {% endif %}
             <tr>
                 <td><label for="city">City:</label></td>
                 <td>{{ address_form.city}}</td>
+            </tr>{%if address_form.city.errors %}
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ address_form.city.errors|striptags }}</p></td>
             </tr>
+        {% endif %}
             <tr>
                 <td><label for="state">State:</label></td>
                 <td>{{ address_form.state}}</td>
+            </tr>{%if address_form.state.errors %}
+            <tr>
+                <td></td>
+                <td ><p class="text-danger">{{ address_form.state.errors|striptags }}</p></td>
             </tr>
+        {% endif %}
         </table>
         {% csrf_token %}
         {{profile_form.errors}}

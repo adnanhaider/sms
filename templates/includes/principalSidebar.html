@@ -8,18 +8,7 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard</a>
                     <!-- <div class="sb-sidenav-menu-heading">Interface</div> -->
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-                        ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Approve Account
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-                    ></a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href={% url 'accounts:approve_teacher' %}>Approve Teacher</a>
-                            <a class="nav-link" href={% url 'accounts:approve_parent' %}>Approve Parent</a>
-                            <a class="nav-link" href={% url 'accounts:approve_student' %}>Approve Student</a>
-                        </nav>
-                    </div>
+                    
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
                         ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                         Accounts
@@ -57,6 +46,35 @@
                         ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Tables</a
                     >
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAttendance" aria-expanded="false" aria-controls="collapseAttendance"
+                        ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        Attendance
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                    ></a>
+                    <div class="collapse" id="collapseAttendance" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
+                                >Make Attendance
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href={% url 'campus:make_hr_attendance'%}>Hr Attendance</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
+                                >Check Attendance
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href={% url 'campus:get_teacher_attendance' %}>Teacher Attendance</a>
+                                    <a class="nav-link" href={% url 'campus:get_hr_attendance' %}>HR Attendance</a>
+                                    <a class="nav-link" href={% url 'campus:get_student_attendance' %}>Student Attendance</a>
+                                </nav>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </nav>

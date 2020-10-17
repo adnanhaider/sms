@@ -1,0 +1,29 @@
+{% extends 'layouts/base.html' %}
+{% block title%}HR Attendance{% endblock title %}
+{% block content %}
+<div class="container">
+    <h3>Hr Attendance for {{date}}</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>S#.</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hr in hr_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ hr.user }}</td>
+                        <td>{{ form.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" value="Update Attendance">
+    </form>
+</div>
+{% endblock %}

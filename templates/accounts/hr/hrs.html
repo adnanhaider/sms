@@ -1,0 +1,41 @@
+{% extends 'layouts/base.html' %}
+{% block title%}Hr Staff List{% endblock title %}
+
+{% block content %}
+<div class="container">
+        <h3>List of HRs</h3>
+    <br>
+    <table class="table table-lg table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Status</th>
+                <th>Birth Date</th>
+                <th>Contact Number</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hr in hrs %}
+                <tr>
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{hr.user.first_name}}</td>
+                    <td>{{hr.user.last_name}}</td>
+                    <td>{% if hr.user.is_active %} Active {%else%} In-Active {% endif %}</td>
+                    <td>{{hr.birth_date}}</td>
+                    <td>{{hr.contact_number}}</td>
+                    <td>{{hr.photo}}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'accounts:create_hr' %}">Add New Hr</a>
+</div>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

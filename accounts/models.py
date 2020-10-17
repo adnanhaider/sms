@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from django.urls import reverse
 from accounts.managers import UserManager
@@ -52,14 +53,14 @@ class Address(models.Model):
     town = models.CharField(max_length=20)
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
-    # def __str__(self):
-    #     return self.city
+    def __str__(self):
+        return self.city
     class Meta:
         db_table = 'Address'
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,unique=True ,default=1)
-    photo = models.ImageField(upload_to='static/images/', null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE ,default=1)
+    photo = models.ImageField(upload_to=settings.MEDIA_ROOT+'/images/profile_images/%Y%m%d', null=True, blank=True, default='/media/images/default.jpg')
     birth_date = models.DateField()
     date_left = models.DateField(null=True, blank=True)
     salary = models.FloatField(max_length=6)
@@ -69,7 +70,10 @@ class Profile(models.Model):
     gender = models.CharField(_('gender'), max_length=1, choices=CHOICES)
     def __str__(self):
         return self.user.__str__()
-        
+    @property
+    def photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
     @property
     def getAge(self):
         return int(datetime.date.today() - self.birth_date)
@@ -207,7 +211,7 @@ class Parent(Profile):
         return True
 
 class Student(Profile):
-    reg_number = models.CharField(primary_key=True, max_length=30, unique=True)
+    reg_number = models.CharField(primary_key=True, max_length=30)
     roll_number = models.PositiveIntegerField()
     STATUS_CHOICES = [('A', 'Active'), ('I', 'Inactive')]
     status = models.CharField(max_length=1, default='A', choices=STATUS_CHOICES)
@@ -216,6 +220,7 @@ class Student(Profile):
     contact_number = None
     address = None
     
+    USERNAME_FIELD = 'roll_number'
     class Meta:
         db_table = 'Student'
         verbose_name = _('student')

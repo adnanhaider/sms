@@ -1,12 +1,13 @@
 {% extends 'layouts/base.html' %}
 {% block title%}Create Student{% endblock title %}
 {% load subtract %}
+
 {% block content %}
 {% include 'includes/foreignkeypopupscripts.html'%}
 <div class="container">
     <h3>Create Student Profile</h3>
     <hr>
-    <form enctype="multipart/form-data" action="" method="post" id="student_form" novalidate="">
+    <form enctype="multipart/form-data" action="" method="post" id="student_form">
         
         <table class="tabal table-sm">
             <tr>
